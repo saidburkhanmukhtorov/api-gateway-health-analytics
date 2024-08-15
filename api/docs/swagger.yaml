@@ -1,0 +1,1153 @@
+definitions:
+  health.GeneticData:
+    properties:
+      analysis_date:
+        type: string
+      created_at:
+        type: string
+      data_type:
+        type: string
+      data_value:
+        type: string
+      id:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  health.HealthRecommendation:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      priority:
+        type: integer
+      recommendation_type:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  health.LifestyleData:
+    properties:
+      created_at:
+        type: string
+      data_type:
+        type: string
+      data_value:
+        type: string
+      id:
+        type: string
+      recorded_date:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  health.ListGeneticDataResponse:
+    properties:
+      genetic_data:
+        items:
+          $ref: '#/definitions/health.GeneticData'
+        type: array
+    type: object
+  health.ListHealthRecommendationsResponse:
+    properties:
+      health_recommendations:
+        items:
+          $ref: '#/definitions/health.HealthRecommendation'
+        type: array
+    type: object
+  health.ListLifestyleDataResponse:
+    properties:
+      lifestyle_data:
+        items:
+          $ref: '#/definitions/health.LifestyleData'
+        type: array
+    type: object
+  health.ListMedicalRecordsResponse:
+    properties:
+      medical_records:
+        items:
+          $ref: '#/definitions/health.MedicalRecord'
+        type: array
+    type: object
+  health.ListWearableDataResponse:
+    properties:
+      wearable_data:
+        items:
+          $ref: '#/definitions/health.WearableData'
+        type: array
+    type: object
+  health.MedicalRecord:
+    properties:
+      attachments:
+        items:
+          type: string
+        type: array
+      created_at:
+        type: string
+      description:
+        type: string
+      doctor_id:
+        type: string
+      id:
+        type: string
+      record_date:
+        type: string
+      record_type:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  health.SummaryResponse:
+    properties:
+      genetic_data:
+        items:
+          $ref: '#/definitions/health.GeneticData'
+        type: array
+      health_recommendations:
+        items:
+          $ref: '#/definitions/health.HealthRecommendation'
+        type: array
+      lifestyle_data:
+        items:
+          $ref: '#/definitions/health.LifestyleData'
+        type: array
+      medical_records:
+        items:
+          $ref: '#/definitions/health.MedicalRecord'
+        type: array
+      wearable_data:
+        items:
+          $ref: '#/definitions/health.WearableData'
+        type: array
+    type: object
+  health.WearableData:
+    properties:
+      created_at:
+        type: string
+      data_type:
+        type: string
+      data_value:
+        type: string
+      device_type:
+        type: string
+      id:
+        type: string
+      recorded_timestamp:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+paths:
+  /v1/genetic-data:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of genetic data records.
+      parameters:
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by data type
+        in: query
+        name: data_type
+        type: string
+      - description: Filter by analysis date (YYYY-MM-DD)
+        in: query
+        name: analysis_date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.ListGeneticDataResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: List Genetic Data
+      tags:
+      - GeneticData
+    post:
+      consumes:
+      - application/json
+      description: Create a new genetic data record with the provided details.
+      parameters:
+      - description: Genetic Data details
+        in: body
+        name: geneticData
+        required: true
+        schema:
+          $ref: '#/definitions/health.GeneticData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Genetic Data record
+      tags:
+      - GeneticData
+  /v1/genetic-data/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a genetic data record by its ID.
+      parameters:
+      - description: Genetic Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Genetic Data
+      tags:
+      - GeneticData
+    get:
+      consumes:
+      - application/json
+      description: Get details of a genetic data record by its ID.
+      parameters:
+      - description: Genetic Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.GeneticData'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Genetic Data by ID
+      tags:
+      - GeneticData
+    put:
+      consumes:
+      - application/json
+      description: Update an existing genetic data record.
+      parameters:
+      - description: Genetic Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated genetic data
+        in: body
+        name: geneticData
+        required: true
+        schema:
+          $ref: '#/definitions/health.GeneticData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update Genetic Data
+      tags:
+      - GeneticData
+  /v1/health-monitoring/daily-summary/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a daily summary of health data for a user.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Date (YYYY-MM-DD)
+        in: query
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.SummaryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Daily Summary
+      tags:
+      - HealthMonitoring
+  /v1/health-monitoring/weekly-summary/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a weekly summary of health data for a user.
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Start Date (YYYY-MM-DD)
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: End Date (YYYY-MM-DD)
+        in: query
+        name: end_date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.SummaryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Weekly Summary
+      tags:
+      - HealthMonitoring
+  /v1/health-recommendations:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of health recommendation records.
+      parameters:
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by recommendation type
+        in: query
+        name: recommendation_type
+        type: string
+      - description: Filter by priority
+        in: query
+        name: priority
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.ListHealthRecommendationsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: List Health Recommendations
+      tags:
+      - HealthRecommendations
+    post:
+      consumes:
+      - application/json
+      description: Create a new health recommendation record with the provided details.
+      parameters:
+      - description: Health Recommendation details
+        in: body
+        name: healthRecommendation
+        required: true
+        schema:
+          $ref: '#/definitions/health.HealthRecommendation'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Health Recommendation record
+      tags:
+      - HealthRecommendations
+  /v1/health-recommendations/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a health recommendation record by its ID.
+      parameters:
+      - description: Health Recommendation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Health Recommendation
+      tags:
+      - HealthRecommendations
+    get:
+      consumes:
+      - application/json
+      description: Get details of a health recommendation record by its ID.
+      parameters:
+      - description: Health Recommendation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.HealthRecommendation'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Health Recommendation by ID
+      tags:
+      - HealthRecommendations
+    put:
+      consumes:
+      - application/json
+      description: Update an existing health recommendation record.
+      parameters:
+      - description: Health Recommendation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated health recommendation
+        in: body
+        name: healthRecommendation
+        required: true
+        schema:
+          $ref: '#/definitions/health.HealthRecommendation'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update Health Recommendation
+      tags:
+      - HealthRecommendations
+  /v1/lifestyle-data:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of lifestyle data records.
+      parameters:
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by data type
+        in: query
+        name: data_type
+        type: string
+      - description: Filter by recorded date (YYYY-MM-DD)
+        in: query
+        name: recorded_date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.ListLifestyleDataResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: List Lifestyle Data
+      tags:
+      - LifestyleData
+    post:
+      consumes:
+      - application/json
+      description: Create a new lifestyle data record with the provided details.
+      parameters:
+      - description: Lifestyle Data details
+        in: body
+        name: lifestyleData
+        required: true
+        schema:
+          $ref: '#/definitions/health.LifestyleData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Lifestyle Data record
+      tags:
+      - LifestyleData
+  /v1/lifestyle-data/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a lifestyle data record by its ID.
+      parameters:
+      - description: Lifestyle Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Lifestyle Data
+      tags:
+      - LifestyleData
+    get:
+      consumes:
+      - application/json
+      description: Get details of a lifestyle data record by its ID.
+      parameters:
+      - description: Lifestyle Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.LifestyleData'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Lifestyle Data by ID
+      tags:
+      - LifestyleData
+    put:
+      consumes:
+      - application/json
+      description: Update an existing lifestyle data record.
+      parameters:
+      - description: Lifestyle Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated lifestyle data
+        in: body
+        name: lifestyleData
+        required: true
+        schema:
+          $ref: '#/definitions/health.LifestyleData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update Lifestyle Data
+      tags:
+      - LifestyleData
+  /v1/medical-records:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of medical records.
+      parameters:
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by record type
+        in: query
+        name: record_type
+        type: string
+      - description: Filter by record date (YYYY-MM-DD)
+        in: query
+        name: record_date
+        type: string
+      - description: Filter by description
+        in: query
+        name: description
+        type: string
+      - description: Filter by doctor ID
+        in: query
+        name: doctor_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.ListMedicalRecordsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: List Medical Records
+      tags:
+      - MedicalRecords
+    post:
+      consumes:
+      - application/json
+      description: Create a new medical record with the provided details.
+      parameters:
+      - description: Medical Record details
+        in: body
+        name: medicalRecord
+        required: true
+        schema:
+          $ref: '#/definitions/health.MedicalRecord'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Medical Record
+      tags:
+      - MedicalRecords
+  /v1/medical-records/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a medical record by its ID.
+      parameters:
+      - description: Medical Record ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Medical Record
+      tags:
+      - MedicalRecords
+    get:
+      consumes:
+      - application/json
+      description: Get details of a medical record by its ID.
+      parameters:
+      - description: Medical Record ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.MedicalRecord'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Medical Record by ID
+      tags:
+      - MedicalRecords
+    put:
+      consumes:
+      - application/json
+      description: Update an existing medical record.
+      parameters:
+      - description: Medical Record ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated medical record
+        in: body
+        name: medicalRecord
+        required: true
+        schema:
+          $ref: '#/definitions/health.MedicalRecord'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update Medical Record
+      tags:
+      - MedicalRecords
+  /v1/wearable-data:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of wearable data records.
+      parameters:
+      - description: Filter by user ID
+        in: query
+        name: user_id
+        type: string
+      - description: Filter by device type
+        in: query
+        name: device_type
+        type: string
+      - description: Filter by data type
+        in: query
+        name: data_type
+        type: string
+      - description: Filter by recorded timestamp (RFC3339 format)
+        in: query
+        name: recorded_timestamp
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.ListWearableDataResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: List Wearable Data
+      tags:
+      - WearableData
+    post:
+      consumes:
+      - application/json
+      description: Create a new wearable data record with the provided details.
+      parameters:
+      - description: Wearable Data details
+        in: body
+        name: wearableData
+        required: true
+        schema:
+          $ref: '#/definitions/health.WearableData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new Wearable Data record
+      tags:
+      - WearableData
+  /v1/wearable-data/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a wearable data record by its ID.
+      parameters:
+      - description: Wearable Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Wearable Data
+      tags:
+      - WearableData
+    get:
+      consumes:
+      - application/json
+      description: Get details of a wearable data record by its ID.
+      parameters:
+      - description: Wearable Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.WearableData'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Get Wearable Data by ID
+      tags:
+      - WearableData
+    put:
+      consumes:
+      - application/json
+      description: Update an existing wearable data record.
+      parameters:
+      - description: Wearable Data ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated wearable data
+        in: body
+        name: wearableData
+        required: true
+        schema:
+          $ref: '#/definitions/health.WearableData'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Update Wearable Data
+      tags:
+      - WearableData
+securityDefinitions:
+  ApiKeyAuth:
+    description: Description for what is this security definition being used
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
